@@ -12,7 +12,7 @@ Jest to projekt w ramach przedmiotu Projekt w C++. Za zadanie obrałem stworzeni
 
 ## Założenia:
 - schludny, minimalistyzny, przystępny dla końcowego użytkownika interfejs
-- akutalne dane na temat kursów pobierane będą bezpośrednio ze strony [Narodowego Banku Polskiego](www.nbp.pl)
+- aktualne dane na temat kursów pobierane będą bezpośrednio ze strony [Narodowego Banku Polskiego](www.nbp.pl)
 - do pobierania i przetwarzania danych wykorzystywane będzie parsowanie plików .xml
 - możliwość pracy w trybie offline, zapisywanie ostatnio pobranych danych na dysku (wraz z datą), które wykorzystywane będą w razie braku połączenia internetem
 - mozliwość szybkiej zamiany przeliczanych walut miejscami
