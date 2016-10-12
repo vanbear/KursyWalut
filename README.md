@@ -1,6 +1,8 @@
 # KursyWalut
 Daniel Wąs
+
 Informatyka Stosowana i Systemy Pomiarowe, rok II
+
 Uniwersytet Wroławski
 
 
