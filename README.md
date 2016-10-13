@@ -24,7 +24,7 @@ Jest to projekt w ramach przedmiotu Projekt w C++. Za zadanie obrałem stworzeni
 ## Kamienie milowe:
 - [x] 13.10.16 - plan projektu
 - [ ] 27.10.16 - wstępny, prowizoryczny projekt interfejsu graficznego oraz zaimplementowanie funkcji sieciowych i systemu obliczania kursów
-- [ ] 3.11.16 - naprawa błędów, przygotowanie prototypu do prezentacji, prezentacja prototypu
-- [ ] 17.11.16 - zaimplementowanie trybu offline
+- [ ] 3.11.16 - naprawa błędów, przygotowanie prototypu do prezentacji
+- [ ] 17.11.16 - zaimplementowanie trybu offline, prezentacja prototypu
 - [ ] 21.12.16 - reprezentacja graficzna każdej z dostępnych walut
 - [ ] 12.01.17 - końowe poprawki, ewnetualne zmiany w interfejsie, deadline
