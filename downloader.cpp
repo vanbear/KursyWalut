@@ -39,6 +39,7 @@ void downloader::ReplyFinished (QNetworkReply *reply)
         }
         delete file;
     }
+    emit DownloadFinished();
 
 
 }

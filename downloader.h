@@ -21,6 +21,7 @@ public:
     void doDownload();
 
 signals:
+    void DownloadFinished();
 
 public slots:
     void ReplyFinished (QNetworkReply *reply);
