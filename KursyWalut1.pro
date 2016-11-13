@@ -16,9 +16,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    downloader.cpp
+    downloader.cpp \
+    currency.cpp
 
 HEADERS  += mainwindow.h \
-    downloader.h
+    downloader.h \
+    currency.h
 
 FORMS    += mainwindow.ui

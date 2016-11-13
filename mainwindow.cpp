@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QWidget>
 #include <QTest>
+#include "currency.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -53,6 +54,8 @@ void MainWindow::XMLParse()
                 QString kod_waluty = pozycja.elementsByTagName("kod_waluty").at(0).toElement().text();
                 double kurs_sredni = pozycja.elementsByTagName("kurs_sredni").at(0).toElement().text().replace(",",".").toDouble();
                 qDebug() << "Pozycja "<< i << ":" << nazwa_waluty << "Przelicznik:" << przelicznik << "Kod" << kod_waluty << "Kurs średni:" << kurs_sredni;
+                currency* obj = new currency(0,nazwa_waluty,przelicznik,kod_waluty,kurs_sredni);
+
 
             }
         }
