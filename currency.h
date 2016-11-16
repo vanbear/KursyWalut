@@ -7,12 +7,12 @@ class currency : public QObject
 {
     Q_OBJECT
 public:
-    explicit currency(QObject *parent = 0, QString name = "non", int multiplier = 0, QString code = "NON", int exchange = 0);
+    currency(std::string name = "non", int multiplier = 0, std::string code = "NON", double exchange = 0);
 
-    QString GetName();
-    int GetMultiplier();
-    QString GetCode();
-    int GetExchange();
+    std::string nazwa;
+    int mnoznik;
+    std::string kod;
+    double kurs;
 
 signals:
 
