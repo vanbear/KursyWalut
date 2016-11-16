@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QMap>
+#include "currency.h"
 
 namespace Ui {
 class MainWindow;
@@ -15,8 +17,13 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    QMap<QString, currency*> waluty;
+
 public slots:
     void XMLParse();
+
+private slots:
+    void on_Button_Przelicz_clicked();
 
 private:
     Ui::MainWindow *ui;

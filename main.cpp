@@ -14,12 +14,6 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-    QString nazwa = "polski złoty";
-    QString kod = "PLN";
-    currency* pl = new currency(nazwa,1,kod,1.);
-    QMap<QString, currency> waluty;
-    waluty.insert(kod,pl);
-
     //Pobierz plik XML
     downloader dwnldr;
     dwnldr.connect(&dwnldr, SIGNAL(DownloadFinished()), &w, SLOT(XMLParse()));

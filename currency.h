@@ -7,11 +7,12 @@ class currency : public QObject
 {
     Q_OBJECT
 public:
-    currency(std::string name = "non", int multiplier = 0, std::string code = "NON", double exchange = 0);
+    currency(QString name = "non", int multiplier = 0, QString code = "NON", double exchange = 0);
+    ~currency();
 
-    std::string nazwa;
+    QString nazwa;
     int mnoznik;
-    std::string kod;
+    QString kod;
     double kurs;
 
 signals:

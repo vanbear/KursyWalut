@@ -20,6 +20,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::XMLParse()
 {
+
+    //najpierw trzeba zrobić Nasze Polskie Złote, których nie ma w pliku, który będziemy parsować
+    QString nazwa = "polski złoty";
+    QString kod = "PLN";
+    currency* pl = new currency(nazwa,1,kod,1.);
+
+    //i teraz wrzucamy początkowe dane do tych struktur
+    waluty.insert(kod,pl);
+
+
     //Otwórz plik XML
     QDomDocument document;
     QFile file("D:/LastA.xml");
@@ -55,9 +65,49 @@ void MainWindow::XMLParse()
                 double kurs_sredni = pozycja.elementsByTagName("kurs_sredni").at(0).toElement().text().replace(",",".").toDouble();
                 qDebug() << "Pozycja "<< i << ":" << nazwa_waluty << "Przelicznik:" << przelicznik << "Kod" << kod_waluty << "Kurs średni:" << kurs_sredni;
                 currency* obj = new currency(nazwa_waluty,przelicznik,kod_waluty,kurs_sredni);
-
-
+                waluty.insert(kod_waluty,obj);
             }
         }
   qDebug() << "Reading finished";
+
+  qDebug() << waluty;
+  qDebug() << waluty.keys();
+  ui->comboBox_CurrencySelect1->addItems(waluty.keys());
+  ui->comboBox_CurrencySelect2->addItems(waluty.keys());
+
+}
+
+void MainWindow::on_Button_Przelicz_clicked()
+{
+
+    // wybrane waluty
+    QString wybrany_kod1 = ui->comboBox_CurrencySelect1->currentText();
+    QString wybrany_kod2 = ui->comboBox_CurrencySelect2->currentText();
+
+    //pobieranie danych z obiektów
+    currency* waluta1 = waluty.value(wybrany_kod1);
+    QString nazwa1 = waluta1->nazwa;
+    QString kod1 = waluta1->kod;
+    int mnoznik1 = waluta1->mnoznik;
+    double kurs1 = waluta1->kurs;
+    kurs1 = kurs1/mnoznik1;
+
+    currency* waluta2 = waluty.value(wybrany_kod2);
+    QString nazwa2 = waluta2->nazwa;
+    QString kod2 = waluta2->kod;
+    int mnoznik2 = waluta2->mnoznik;
+    double kurs2 = waluta2->kurs;
+    kurs2 = kurs2/mnoznik2;
+
+    // sprawdzanie wpisanej wartosci
+    double wpisana_wartosc = ui->LineEdit_AmountInput1->text().replace(",",".").toDouble();
+    if (!wpisana_wartosc) wpisana_wartosc = 1; // jeżeli użytkownik nic nie wpisze to ustala wartość na 1
+
+    double wynik = wpisana_wartosc*(kurs1/kurs2);
+
+    QString tekst = QString::number(wpisana_wartosc)+" "+kod1+" = "+QString::number(wynik)+" "+kod2;
+    ui->label_ShowResults->setText(tekst);
+
+    qDebug() << "Wybrano " << nazwa1 << "kurs: " << kurs1 << " i " << nazwa2 << "kurs: " << kurs2;
+
 }
