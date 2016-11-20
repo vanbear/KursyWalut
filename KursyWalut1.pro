@@ -24,3 +24,5 @@ HEADERS  += mainwindow.h \
     currency.h
 
 FORMS    += mainwindow.ui
+
+DISTFILES +=

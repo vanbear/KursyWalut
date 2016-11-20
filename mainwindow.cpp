@@ -104,9 +104,14 @@ void MainWindow::on_Button_Przelicz_clicked()
     if (!wpisana_wartosc) wpisana_wartosc = 1; // jeżeli użytkownik nic nie wpisze to ustala wartość na 1
 
     double wynik = wpisana_wartosc*(kurs1/kurs2);
+    double wynik2 = kurs1/kurs2;
 
-    QString tekst = QString::number(wpisana_wartosc)+" "+kod1+" = "+QString::number(wynik)+" "+kod2;
+    QString tekst = QString::number(wpisana_wartosc,'f',2)+" "+kod1+" = "+QString::number(wynik,'f',2)+" "+kod2;
+    QString tekst2 = "1 "+kod1+" = "+QString::number(wynik2,'f',2)+" "+kod2;
+
     ui->label_ShowResults->setText(tekst);
+    ui->label_ShowResults_small->setText(tekst2);
+    ui->label_ShowResults->setWordWrap(true);
 
     qDebug() << "Wybrano " << nazwa1 << "kurs: " << kurs1 << " i " << nazwa2 << "kurs: " << kurs2;
 

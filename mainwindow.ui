@@ -6,15 +6,28 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>420</width>
-    <height>368</height>
+    <width>541</width>
+    <height>326</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>KursyWalut</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <spacer name="verticalSpacer_3">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>11</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
@@ -31,7 +44,13 @@
        </spacer>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox_CurrencySelect1"/>
+       <widget class="QComboBox" name="comboBox_CurrencySelect1">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="label">
@@ -52,7 +71,13 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox_CurrencySelect2"/>
+       <widget class="QComboBox" name="comboBox_CurrencySelect2">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+         </font>
+        </property>
+       </widget>
       </item>
       <item>
        <spacer name="horizontalSpacer_8">
@@ -147,6 +172,19 @@
      </layout>
     </item>
     <item>
+     <spacer name="verticalSpacer">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>38</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
      <widget class="QLabel" name="label_ShowResults">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -156,7 +194,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>14</pointsize>
         <weight>75</weight>
         <italic>false</italic>
         <bold>true</bold>
@@ -165,18 +203,43 @@
        </font>
       </property>
       <property name="text">
-       <string>TextLabel</string>
+       <string>Wybierz waluty, wpisz wartość</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QLabel" name="label_ShowResults_small">
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+        <underline>false</underline>
+       </font>
+      </property>
+      <property name="text">
+       <string>I wciśnij &quot;Przelicz!&quot;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="verticalSpacer_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>49</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
    </layout>
-   <zorder>layoutWidget</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>layoutWidget</zorder>
-   <zorder>label_ShowResults</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
@@ -184,7 +247,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>420</width>
+     <width>541</width>
      <height>21</height>
     </rect>
    </property>
