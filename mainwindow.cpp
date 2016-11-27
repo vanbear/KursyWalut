@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QTest>
 #include "currency.h"
+#include <QPixmap>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -114,6 +115,12 @@ void MainWindow::on_Button_Przelicz_clicked()
     ui->label_ShowResults->setWordWrap(true);
 
     qDebug() << "Wybrano " << nazwa1 << "kurs: " << kurs1 << " i " << nazwa2 << "kurs: " << kurs2;
+
+    //wyświetlanie nazw walut
+
+   ui->label_CurrenyName1->setText(nazwa1);
+   ui->label_CurrenyName2->setText(nazwa2);
+
 
 }
 
