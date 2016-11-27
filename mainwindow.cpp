@@ -6,12 +6,22 @@
 #include <QTest>
 #include "currency.h"
 #include <QPixmap>
+#include <QShortcut>
+#include <QFileInfo>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QPixmap pix(":/flags/img/flags/undefined.jpg");
+    ui->label_showPic1->setPixmap(pix);
+    ui->label_showPic2->setPixmap(pix);
+
+
+    QKeySequence ks(Qt::Key_Enter);
+    QShortcut* shortcut = new QShortcut(ks, this);
+    QObject::connect(shortcut, SIGNAL(activated()), this, SLOT(on_Button_Przelicz_clicked()));
 }
 
 MainWindow::~MainWindow()
@@ -117,9 +127,25 @@ void MainWindow::on_Button_Przelicz_clicked()
     qDebug() << "Wybrano " << nazwa1 << "kurs: " << kurs1 << " i " << nazwa2 << "kurs: " << kurs2;
 
     //wyświetlanie nazw walut
+    ui->label_CurrenyName1->setText(nazwa1);
+    ui->label_CurrenyName2->setText(nazwa2);
 
-   ui->label_CurrenyName1->setText(nazwa1);
-   ui->label_CurrenyName2->setText(nazwa2);
+    //zmiana obrazków
+    QString path1=":/flags/img/flags/"+kod1+".jpg";
+    QString path2=":/flags/img/flags/"+kod2+".jpg";
+
+    QFileInfo info1(path1);
+    QFileInfo info2(path2);
+    QPixmap pix(":/flags/img/flags/undefined.jpg");
+
+    if (info1.exists())
+        ui->label_showPic1->setPixmap(path1);
+    else
+        ui->label_showPic1->setPixmap(pix);
+    if (info2.exists())
+        ui->label_showPic2->setPixmap(path2);
+    else
+        ui->label_showPic2->setPixmap(pix);
 
 
 }

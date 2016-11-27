@@ -24,7 +24,6 @@ public slots:
 
 private slots:
     void on_Button_Przelicz_clicked();
-
     void on_Button_switch_clicked();
 
 private:

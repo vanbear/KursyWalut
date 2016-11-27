@@ -26,3 +26,6 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui
 
 DISTFILES +=
+
+RESOURCES += \
+    kursywalutresources.qrc

@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>KursyWalut</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="kursywalutresources.qrc">
+    <normaloff>:/others/img/icon.png</normaloff>:/others/img/icon.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_3">
     <item>
@@ -149,6 +153,12 @@
         <property name="text">
          <string>Przelicz</string>
         </property>
+        <property name="autoDefault">
+         <bool>false</bool>
+        </property>
+        <property name="default">
+         <bool>false</bool>
+        </property>
        </widget>
       </item>
       <item>
@@ -202,6 +212,9 @@
           <property name="text">
            <string>Waluta 1</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
          </widget>
         </item>
         <item>
@@ -212,8 +225,20 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Plain</enum>
+          </property>
+          <property name="lineWidth">
+           <number>2</number>
+          </property>
+          <property name="midLineWidth">
+           <number>0</number>
+          </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string>Obrazek 1</string>
           </property>
          </widget>
         </item>
@@ -246,12 +271,27 @@
           <property name="text">
            <string>Waluta 2</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_showPic2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="lineWidth">
+           <number>2</number>
+          </property>
           <property name="text">
-           <string>TextLabel</string>
+           <string>Obrazek 2</string>
           </property>
          </widget>
         </item>
@@ -344,15 +384,6 @@
    <zorder>label_ShowResults</zorder>
    <zorder>label_ShowResults_small</zorder>
    <zorder>line</zorder>
-   <zorder>label_CurrenyName1</zorder>
-   <zorder>label_CurrenyName2</zorder>
-   <zorder>label_showPic1</zorder>
-   <zorder>label_showPic2</zorder>
-   <zorder>label_CurrenyName1</zorder>
-   <zorder>label_showPic1</zorder>
-   <zorder>horizontalSpacer_2</zorder>
-   <zorder>horizontalSpacer_6</zorder>
-   <zorder>horizontalSpacer_9</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
@@ -391,6 +422,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="kursywalutresources.qrc"/>
+ </resources>
  <connections/>
 </ui>
