@@ -116,3 +116,15 @@ void MainWindow::on_Button_Przelicz_clicked()
     qDebug() << "Wybrano " << nazwa1 << "kurs: " << kurs1 << " i " << nazwa2 << "kurs: " << kurs2;
 
 }
+
+void MainWindow::on_Button_switch_clicked()
+{
+    QString selected1 = ui->comboBox_CurrencySelect1->currentText();
+    QString selected2 = ui->comboBox_CurrencySelect2->currentText();
+    int index1 = ui->comboBox_CurrencySelect1->findText(selected1);
+    int index2 = ui->comboBox_CurrencySelect2->findText(selected2);
+    qDebug() << "Zamiana miejsc, indeksy:" << index1 << ", " << index2;
+
+    ui->comboBox_CurrencySelect1->setCurrentIndex(index2);
+    ui->comboBox_CurrencySelect2->setCurrentIndex(index1);
+}
