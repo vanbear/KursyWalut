@@ -7,5 +7,10 @@
         <file>img/flags/EUR.png</file>
         <file>img/flags/undefined.png</file>
         <file>img/flags/PLN.png</file>
+        <file>img/flags/AUD.png</file>
+        <file>img/flags/BGN.png</file>
+        <file>img/flags/BRL.png</file>
+        <file>img/flags/CAD.png</file>
+        <file>img/flags/CHF.png</file>
     </qresource>
 </RCC>
