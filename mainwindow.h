@@ -26,6 +26,10 @@ private slots:
     void on_Button_Przelicz_clicked();
     void on_Button_switch_clicked();
 
+    void on_comboBox_CurrencySelect1_currentIndexChanged(const QString &arg1);
+
+    void on_comboBox_CurrencySelect2_currentIndexChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
 };

@@ -8,6 +8,7 @@
 #include <QPixmap>
 #include <QShortcut>
 #include <QFileInfo>
+#include <QGraphicsDropShadowEffect>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,10 +19,28 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->label_showPic1->setPixmap(pix);
     ui->label_showPic2->setPixmap(pix);
 
+    //ustawianie rozmiaru okna
+    this->setFixedSize(this->geometry().width(),this->geometry().height());
+    this->statusBar()->setSizeGripEnabled(false);
 
-    QKeySequence ks(Qt::Key_Enter);
-    QShortcut* shortcut = new QShortcut(ks, this);
-    QObject::connect(shortcut, SIGNAL(activated()), this, SLOT(on_Button_Przelicz_clicked()));
+    //ustawianie cienia na tekście
+
+    QList<QLabel*> label_list_;
+    QList<QGraphicsDropShadowEffect*> shadow_list_;
+    label_list_.append(ui->label_CurrenyName1);
+    label_list_.append(ui->label_CurrenyName2);
+    label_list_.append(ui->label_ShowResults);
+    label_list_.append(ui->label_ShowResults_small);
+    label_list_.append(ui->label_2);
+
+    foreach(QLabel *lbl, label_list_) {
+        shadow_list_.append(new QGraphicsDropShadowEffect);
+        shadow_list_.back()->setBlurRadius(0);
+        shadow_list_.back()->setColor(QColor("#000000"));
+        shadow_list_.back()->setOffset(2,2);
+        lbl->setGraphicsEffect(shadow_list_.back());
+    }
+
 }
 
 MainWindow::~MainWindow()
@@ -126,17 +145,19 @@ void MainWindow::on_Button_Przelicz_clicked()
 
     qDebug() << "Wybrano " << nazwa1 << "kurs: " << kurs1 << " i " << nazwa2 << "kurs: " << kurs2;
 
+
+    /*
     //wyświetlanie nazw walut
     ui->label_CurrenyName1->setText(nazwa1);
     ui->label_CurrenyName2->setText(nazwa2);
 
     //zmiana obrazków
-    QString path1=":/flags/img/flags/"+kod1+".jpg";
-    QString path2=":/flags/img/flags/"+kod2+".jpg";
+    QString path1=":/flags/img/flags/"+kod1+".png";
+    QString path2=":/flags/img/flags/"+kod2+".png";
 
     QFileInfo info1(path1);
     QFileInfo info2(path2);
-    QPixmap pix(":/flags/img/flags/undefined.jpg");
+    QPixmap pix(":/flags/img/flags/undefined.png");
 
     if (info1.exists())
         ui->label_showPic1->setPixmap(path1);
@@ -146,7 +167,7 @@ void MainWindow::on_Button_Przelicz_clicked()
         ui->label_showPic2->setPixmap(path2);
     else
         ui->label_showPic2->setPixmap(pix);
-
+    */
 
 }
 
@@ -160,4 +181,50 @@ void MainWindow::on_Button_switch_clicked()
 
     ui->comboBox_CurrencySelect1->setCurrentIndex(index2);
     ui->comboBox_CurrencySelect2->setCurrentIndex(index1);
+}
+
+void MainWindow::on_comboBox_CurrencySelect1_currentIndexChanged(const QString &arg1)
+{
+    // wybrane waluty
+    QString kod = arg1;
+
+    //zmiana obrazków
+    QString path=":/flags/img/flags/"+kod+".png";
+
+    QFileInfo info(path);
+    QPixmap pix(":/flags/img/flags/undefined.png");
+
+    if (info.exists())
+        ui->label_showPic1->setPixmap(path);
+    else
+        ui->label_showPic1->setPixmap(pix);
+
+    //zmiana napisów
+    currency* waluta = waluty.value(arg1);
+    QString nazwa = waluta->nazwa;
+    ui->label_CurrenyName1->setText(nazwa);
+
+
+}
+
+void MainWindow::on_comboBox_CurrencySelect2_currentIndexChanged(const QString &arg1)
+{
+    // wybrane waluty
+    QString kod = arg1;
+
+    //zmiana obrazków
+    QString path=":/flags/img/flags/"+kod+".png";
+
+    QFileInfo info(path);
+    QPixmap pix(":/flags/img/flags/undefined.png");
+
+    if (info.exists())
+        ui->label_showPic2->setPixmap(path);
+    else
+        ui->label_showPic2->setPixmap(pix);
+
+    //zmiana napisów
+    currency* waluta = waluty.value(arg1);
+    QString nazwa = waluta->nazwa;
+    ui->label_CurrenyName2->setText(nazwa);
 }

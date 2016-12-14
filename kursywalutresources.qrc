@@ -1,15 +1,11 @@
 <RCC>
     <qresource prefix="/others">
         <file>img/icon.png</file>
+        <file>img/changeButton.png</file>
     </qresource>
     <qresource prefix="/flags">
-        <file>img/flags/AUD.jpg</file>
-        <file>img/flags/BGN.jpg</file>
-        <file>img/flags/BRL.jpg</file>
-        <file>img/flags/CAD.jpg</file>
-        <file>img/flags/CHF.jpg</file>
-        <file>img/flags/EUR.jpg</file>
-        <file>img/flags/PLN.jpg</file>
-        <file>img/flags/undefined.jpg</file>
+        <file>img/flags/EUR.png</file>
+        <file>img/flags/undefined.png</file>
+        <file>img/flags/PLN.png</file>
     </qresource>
 </RCC>
