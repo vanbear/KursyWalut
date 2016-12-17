@@ -19,11 +19,9 @@ public:
     ~MainWindow();
 
     QMap<QString, currency*> waluty;
-    QLabel* m_statusLeft = new QLabel("", this);
-    QLabel* m_statusMiddle = new QLabel("", this);
-    QLabel* m_statusRight = new QLabel("", this);
-
-
+    QLabel* m_statusLeft = new QLabel("-", this);
+    QLabel* m_statusMiddle = new QLabel("-", this);
+    QLabel* m_statusRight = new QLabel("-", this);
 
 public slots:
     void XMLParse();

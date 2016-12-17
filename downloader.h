@@ -23,9 +23,11 @@ public:
 
 signals:
     void DownloadFinished();
+    void GotStatus(QString txt);
 
 public slots:
     void ReplyFinished (QNetworkReply *reply);
+
 
 private:
     QNetworkAccessManager *manager;

@@ -19,5 +19,7 @@ int main(int argc, char *argv[])
     dwnldr.connect(&dwnldr, SIGNAL(DownloadFinished()), &w, SLOT(XMLParse()));
     dwnldr.doDownload();
 
+    dwnldr.connect(&dwnldr, SIGNAL(GotStatus(QString)), &w, SLOT(changeStatus(QString)));
+
     return a.exec();
 }

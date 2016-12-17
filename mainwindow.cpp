@@ -25,10 +25,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_statusLeft->setStyleSheet("QLabel { color : white; }");
     m_statusMiddle->setStyleSheet("QLabel { color : white; }");
-    m_statusRight->setStyleSheet("QLabel { color : white; }");
+    m_statusRight->setStyleSheet("QLabel { color : white;}");
+    m_statusRight->setAlignment(Qt::AlignRight);
+    m_statusMiddle->setAlignment(Qt::AlignCenter);
 
     double x = this->geometry().width();
-    double statuswidth=x/3;
+    double statuswidth=x/3-5;
 
     m_statusLeft->setFixedWidth(statuswidth);
     m_statusMiddle->setFixedWidth(statuswidth);
@@ -64,19 +66,14 @@ MainWindow::~MainWindow()
 void MainWindow::changeStatus(QString txt)
 {
     this->m_statusRight->setText(txt);
+    if (txt=="Online")
+        m_statusRight->setStyleSheet("QLabel { color : #00ff00;}");
+    if (txt=="Offline")
+        m_statusRight->setStyleSheet("QLabel { color : #ff0000;}");
 }
 
 void MainWindow::XMLParse()
 {
-
-    //najpierw trzeba zrobić Nasze Polskie Złote, których nie ma w pliku, który będziemy parsować
-    QString nazwa = "polski złoty";
-    QString kod = "PLN";
-    currency* pl = new currency(nazwa,1,kod,1.);
-
-    //i teraz wrzucamy początkowe dane do tych struktur
-    waluty.insert(kod,pl);
-
 
     //Otwórz plik XML
     QDomDocument document;
@@ -85,60 +82,76 @@ void MainWindow::XMLParse()
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             qDebug() << "Nie znaleziono pliku";
+            ui->label_ShowResults->setText("Nie znaleziono pliku z danymi!");
+            ui->label_ShowResults_small->setText("Sprawdź połączenie z internetem");
         }
+    else
+    {
+        if(!document.setContent(&file))
+        {
+            qDebug() << "Błąd przy otwieraniu pliku";
+            file.close();
+            ui->label_ShowResults->setText("Nie udało się otworzyć pliku z danymi!");
+            ui->label_ShowResults_small->setText("");
+
+        }
+
         else
         {
-            if(!document.setContent(&file))
-            {
-                qDebug() << "Plik jest chyba popsutyyy";
-            }
-            file.close();
+            //najpierw trzeba zrobić Nasze Polskie Złote, których nie ma w pliku, który będziemy parsować
+            QString nazwa = "polski złoty";
+            QString kod = "PLN";
+            currency* pl = new currency(nazwa,1,kod,1.);
+
+            //i teraz wrzucamy początkowe dane do tych struktur
+            waluty.insert(kod,pl);
+
+                // Główny znacznik
+                QDomElement root = document.firstChildElement();
+
+                QDomNodeList pozycje = root.elementsByTagName("pozycja");
+                for(int i = 0; i < pozycje.count(); i++)
+                {
+                    QDomNode znacznik_pozycje = pozycje.at(i);
+                    if (znacznik_pozycje.isElement())
+                    {
+                        // dana pozycja
+                        QDomElement pozycja = znacznik_pozycje.toElement();
+
+                        // pobieranie danych ze znaczników z danej pozycji
+                        QString nazwa_waluty = pozycja.elementsByTagName("nazwa_waluty").at(0).toElement().text();
+                        int przelicznik = pozycja.elementsByTagName("przelicznik").at(0).toElement().text().toInt();
+                        QString kod_waluty = pozycja.elementsByTagName("kod_waluty").at(0).toElement().text();
+                        double kurs_sredni = pozycja.elementsByTagName("kurs_sredni").at(0).toElement().text().replace(",",".").toDouble();
+                        qDebug() << "Pozycja "<< i << ":" << nazwa_waluty << "Przelicznik:" << przelicznik << "Kod" << kod_waluty << "Kurs średni:" << kurs_sredni;
+                        currency* obj = new currency(nazwa_waluty,przelicznik,kod_waluty,kurs_sredni);
+                        waluty.insert(kod_waluty,obj);
+                    }
+                }
+
+                QDomNode data = root.elementsByTagName("data_publikacji").at(0);
+                if (data.isElement())
+                {
+                    QString data_publikacji = data.toElement().text();
+                    m_statusLeft->setText("Dane z dnia: "+data_publikacji);
+                }
+
+                QDomNode numer = root.elementsByTagName("numer_tabeli").at(0);
+                if (data.isElement())
+                {
+                    QString numer_tabeli = numer.toElement().text();
+                    m_statusMiddle->setText("Numer tabeli: "+numer_tabeli);
+                }
+
+          qDebug() << "Reading finished";
+          file.close();
+
+          qDebug() << waluty.keys();
+          ui->comboBox_CurrencySelect1->addItems(waluty.keys());
+          ui->comboBox_CurrencySelect2->addItems(waluty.keys());
+
         }
-
-        // Główny znacznik
-        QDomElement root = document.firstChildElement();
-
-        QDomNodeList pozycje = root.elementsByTagName("pozycja");
-        for(int i = 0; i < pozycje.count(); i++)
-        {
-            QDomNode znacznik_pozycje = pozycje.at(i);
-            if (znacznik_pozycje.isElement())
-            {
-                // dana pozycja
-                QDomElement pozycja = znacznik_pozycje.toElement();
-
-                // pobieranie danych ze znaczników z danej pozycji
-                QString nazwa_waluty = pozycja.elementsByTagName("nazwa_waluty").at(0).toElement().text();
-                int przelicznik = pozycja.elementsByTagName("przelicznik").at(0).toElement().text().toInt();
-                QString kod_waluty = pozycja.elementsByTagName("kod_waluty").at(0).toElement().text();
-                double kurs_sredni = pozycja.elementsByTagName("kurs_sredni").at(0).toElement().text().replace(",",".").toDouble();
-                qDebug() << "Pozycja "<< i << ":" << nazwa_waluty << "Przelicznik:" << przelicznik << "Kod" << kod_waluty << "Kurs średni:" << kurs_sredni;
-                currency* obj = new currency(nazwa_waluty,przelicznik,kod_waluty,kurs_sredni);
-                waluty.insert(kod_waluty,obj);
-            }
-        }
-
-        QDomNode data = root.elementsByTagName("data_publikacji").at(0);
-        if (data.isElement())
-        {
-            QString data_publikacji = data.toElement().text();
-            m_statusLeft->setText("Dane z dnia: "+data_publikacji);
-        }
-
-        QDomNode numer = root.elementsByTagName("numer_tabeli").at(0);
-        if (data.isElement())
-        {
-            QString numer_tabeli = numer.toElement().text();
-            m_statusMiddle->setText("Numer tabeli: "+numer_tabeli);
-        }
-
-  qDebug() << "Reading finished";
-
-  qDebug() << waluty;
-  qDebug() << waluty.keys();
-  ui->comboBox_CurrencySelect1->addItems(waluty.keys());
-  ui->comboBox_CurrencySelect2->addItems(waluty.keys());
-
+    }
 }
 
 void MainWindow::on_Button_Przelicz_clicked()
@@ -150,7 +163,7 @@ void MainWindow::on_Button_Przelicz_clicked()
     int i1 = ui->comboBox_CurrencySelect1->currentIndex();
     int i2 = ui->comboBox_CurrencySelect2->currentIndex();
 
-    if (i1>=0 and i2>=0 )
+    if (i1>=0 and i2>=0)
     {
         //pobieranie danych z obiektów
         currency* waluta1 = waluty.value(wybrany_kod1);

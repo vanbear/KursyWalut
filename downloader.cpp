@@ -23,14 +23,16 @@ void downloader::ReplyFinished (QNetworkReply *reply)
     {
         if (reply->ContentNotFoundError)
         {
-            qDebug() << "Nie udało się pobrać pliku!";
+            qDebug() << "Nie znaleziono pliku!";
+            emit GotStatus("Offline");
         }
+        qDebug() << "Nie udało się pobrać pliku!";
+        emit GotStatus("Offline");
     }
     else
     {
         qDebug( )<< "Pobrano plik";
-
-
+        emit GotStatus("Online");
         qDebug() << reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
         qDebug() << reply->header(QNetworkRequest::ContentTypeHeader).toString();
 
