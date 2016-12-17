@@ -1,6 +1,7 @@
 #include <QCoreApplication>
 
 #include "downloader.h"
+#include "mainwindow.h"
 
 downloader::downloader(QObject *parent) : QObject(parent)
 {
@@ -20,15 +21,20 @@ void downloader::ReplyFinished (QNetworkReply *reply)
 {
     if (reply->error())
     {
-        qDebug() << "Nie udało się pobrać pliku!";
+        if (reply->ContentNotFoundError)
+        {
+            qDebug() << "Nie udało się pobrać pliku!";
+        }
     }
     else
     {
         qDebug( )<< "Pobrano plik";
+
+
         qDebug() << reply->attribute(QNetworkRequest::HttpReasonPhraseAttribute).toString();
         qDebug() << reply->header(QNetworkRequest::ContentTypeHeader).toString();
 
-        QFile *file = new QFile("D:/LastA.xml");
+        QFile *file = new QFile("LastA.xml");
         if (file->open(QFile::WriteOnly))
         {
             qDebug( )<< "Zapis start" << file->fileName();

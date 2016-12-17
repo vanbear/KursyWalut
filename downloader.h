@@ -12,6 +12,7 @@
 #include <QFile>
 #include <QDebug>
 
+#include "mainwindow.h"
 class downloader : public QObject
 {
     Q_OBJECT

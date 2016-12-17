@@ -23,8 +23,21 @@ MainWindow::MainWindow(QWidget *parent) :
     this->setFixedSize(this->geometry().width(),this->geometry().height());
     this->statusBar()->setSizeGripEnabled(false);
 
-    //ustawianie cienia na tekście
+    m_statusLeft->setStyleSheet("QLabel { color : white; }");
+    m_statusMiddle->setStyleSheet("QLabel { color : white; }");
+    m_statusRight->setStyleSheet("QLabel { color : white; }");
 
+    double x = this->geometry().width();
+    double statuswidth=x/3;
+
+    m_statusLeft->setFixedWidth(statuswidth);
+    m_statusMiddle->setFixedWidth(statuswidth);
+    m_statusRight->setFixedWidth(statuswidth);
+    statusBar()->addPermanentWidget(m_statusLeft, 1);
+    statusBar()->addPermanentWidget(m_statusMiddle, 1);
+    statusBar()->addPermanentWidget(m_statusRight, 2);
+
+    //ustawianie cienia na tekście
     QList<QLabel*> label_list_;
     QList<QGraphicsDropShadowEffect*> shadow_list_;
     label_list_.append(ui->label_CurrenyName1);
@@ -48,6 +61,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::changeStatus(QString txt)
+{
+    this->m_statusRight->setText(txt);
+}
+
 void MainWindow::XMLParse()
 {
 
@@ -62,7 +80,7 @@ void MainWindow::XMLParse()
 
     //Otwórz plik XML
     QDomDocument document;
-    QFile file("D:/LastA.xml");
+    QFile file("LastA.xml");
 
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
@@ -88,6 +106,7 @@ void MainWindow::XMLParse()
             {
                 // dana pozycja
                 QDomElement pozycja = znacznik_pozycje.toElement();
+
                 // pobieranie danych ze znaczników z danej pozycji
                 QString nazwa_waluty = pozycja.elementsByTagName("nazwa_waluty").at(0).toElement().text();
                 int przelicznik = pozycja.elementsByTagName("przelicznik").at(0).toElement().text().toInt();
@@ -98,6 +117,21 @@ void MainWindow::XMLParse()
                 waluty.insert(kod_waluty,obj);
             }
         }
+
+        QDomNode data = root.elementsByTagName("data_publikacji").at(0);
+        if (data.isElement())
+        {
+            QString data_publikacji = data.toElement().text();
+            m_statusLeft->setText("Dane z dnia: "+data_publikacji);
+        }
+
+        QDomNode numer = root.elementsByTagName("numer_tabeli").at(0);
+        if (data.isElement())
+        {
+            QString numer_tabeli = numer.toElement().text();
+            m_statusMiddle->setText("Numer tabeli: "+numer_tabeli);
+        }
+
   qDebug() << "Reading finished";
 
   qDebug() << waluty;
@@ -113,61 +147,47 @@ void MainWindow::on_Button_Przelicz_clicked()
     // wybrane waluty
     QString wybrany_kod1 = ui->comboBox_CurrencySelect1->currentText();
     QString wybrany_kod2 = ui->comboBox_CurrencySelect2->currentText();
+    int i1 = ui->comboBox_CurrencySelect1->currentIndex();
+    int i2 = ui->comboBox_CurrencySelect2->currentIndex();
 
-    //pobieranie danych z obiektów
-    currency* waluta1 = waluty.value(wybrany_kod1);
-    QString nazwa1 = waluta1->nazwa;
-    QString kod1 = waluta1->kod;
-    int mnoznik1 = waluta1->mnoznik;
-    double kurs1 = waluta1->kurs;
-    kurs1 = kurs1/mnoznik1;
+    if (i1>=0 and i2>=0 )
+    {
+        //pobieranie danych z obiektów
+        currency* waluta1 = waluty.value(wybrany_kod1);
+        QString nazwa1 = waluta1->nazwa;
+        QString kod1 = waluta1->kod;
+        int mnoznik1 = waluta1->mnoznik;
+        double kurs1 = waluta1->kurs;
+        kurs1 = kurs1/mnoznik1;
 
-    currency* waluta2 = waluty.value(wybrany_kod2);
-    QString nazwa2 = waluta2->nazwa;
-    QString kod2 = waluta2->kod;
-    int mnoznik2 = waluta2->mnoznik;
-    double kurs2 = waluta2->kurs;
-    kurs2 = kurs2/mnoznik2;
+        currency* waluta2 = waluty.value(wybrany_kod2);
+        QString nazwa2 = waluta2->nazwa;
+        QString kod2 = waluta2->kod;
+        int mnoznik2 = waluta2->mnoznik;
+        double kurs2 = waluta2->kurs;
+        kurs2 = kurs2/mnoznik2;
 
-    // sprawdzanie wpisanej wartosci
-    double wpisana_wartosc = ui->LineEdit_AmountInput1->text().replace(",",".").toDouble();
-    if (!wpisana_wartosc) wpisana_wartosc = 1; // jeżeli użytkownik nic nie wpisze to ustala wartość na 1
+        // sprawdzanie wpisanej wartosci
+        double wpisana_wartosc = ui->LineEdit_AmountInput1->text().replace(",",".").toDouble();
+        if (!wpisana_wartosc) wpisana_wartosc = 1; // jeżeli użytkownik nic nie wpisze to ustala wartość na 1
 
-    double wynik = wpisana_wartosc*(kurs1/kurs2);
-    double wynik2 = kurs1/kurs2;
+        double wynik = wpisana_wartosc*(kurs1/kurs2);
+        double wynik2 = kurs1/kurs2;
 
-    QString tekst = QString::number(wpisana_wartosc,'f',2)+" "+kod1+" = "+QString::number(wynik,'f',2)+" "+kod2;
-    QString tekst2 = "1 "+kod1+" = "+QString::number(wynik2,'f',2)+" "+kod2;
+        QString tekst = QString::number(wpisana_wartosc,'f',3)+" "+kod1+" = "+QString::number(wynik,'f',3)+" "+kod2;
+        QString tekst2 = "1 "+kod1+" = "+QString::number(wynik2,'f',3)+" "+kod2;
 
-    ui->label_ShowResults->setText(tekst);
-    ui->label_ShowResults_small->setText(tekst2);
-    ui->label_ShowResults->setWordWrap(true);
+        ui->label_ShowResults->setText(tekst);
+        ui->label_ShowResults_small->setText(tekst2);
+        ui->label_ShowResults->setWordWrap(true);
 
-    qDebug() << "Wybrano " << nazwa1 << "kurs: " << kurs1 << " i " << nazwa2 << "kurs: " << kurs2;
-
-
-    /*
-    //wyświetlanie nazw walut
-    ui->label_CurrenyName1->setText(nazwa1);
-    ui->label_CurrenyName2->setText(nazwa2);
-
-    //zmiana obrazków
-    QString path1=":/flags/img/flags/"+kod1+".png";
-    QString path2=":/flags/img/flags/"+kod2+".png";
-
-    QFileInfo info1(path1);
-    QFileInfo info2(path2);
-    QPixmap pix(":/flags/img/flags/undefined.png");
-
-    if (info1.exists())
-        ui->label_showPic1->setPixmap(path1);
+        qDebug() << "Wybrano " << nazwa1 << "kurs: " << kurs1 << " i " << nazwa2 << "kurs: " << kurs2;
+     }
     else
-        ui->label_showPic1->setPixmap(pix);
-    if (info2.exists())
-        ui->label_showPic2->setPixmap(path2);
-    else
-        ui->label_showPic2->setPixmap(pix);
-    */
+    {
+        ui->label_ShowResults->setText("Nie wybrałeś walut do przeliczenia");
+        ui->label_ShowResults_small->setText("Prawdopodobnie nie udało się pobrać pliku z danymi.");
+    }
 
 }
 
@@ -228,3 +248,4 @@ void MainWindow::on_comboBox_CurrencySelect2_currentIndexChanged(const QString &
     QString nazwa = waluta->nazwa;
     ui->label_CurrenyName2->setText(nazwa);
 }
+
