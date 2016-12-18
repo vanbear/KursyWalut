@@ -15,29 +15,22 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    QPixmap pix(":/flags/img/flags/undefined.jpg");
-    ui->label_showPic1->setPixmap(pix);
-    ui->label_showPic2->setPixmap(pix);
 
     //ustawianie rozmiaru okna
     this->setFixedSize(this->geometry().width(),this->geometry().height());
     this->statusBar()->setSizeGripEnabled(false);
 
+    // ustawianie wyglądu paska statusu
     m_statusLeft->setStyleSheet("QLabel { color : white; }");
     m_statusMiddle->setStyleSheet("QLabel { color : white; }");
     m_statusRight->setStyleSheet("QLabel { color : white;}");
-    m_statusRight->setAlignment(Qt::AlignRight);
+
     m_statusMiddle->setAlignment(Qt::AlignCenter);
+    m_statusRight->setAlignment(Qt::AlignRight);
 
-    double x = this->geometry().width();
-    double statuswidth=x/3-5;
-
-    m_statusLeft->setFixedWidth(statuswidth);
-    m_statusMiddle->setFixedWidth(statuswidth);
-    m_statusRight->setFixedWidth(statuswidth);
     statusBar()->addPermanentWidget(m_statusLeft, 1);
     statusBar()->addPermanentWidget(m_statusMiddle, 1);
-    statusBar()->addPermanentWidget(m_statusRight, 2);
+    statusBar()->addPermanentWidget(m_statusRight, 1);
 
     //ustawianie cienia na tekście
     QList<QLabel*> label_list_;
@@ -63,7 +56,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::changeStatus(QString txt)
+void MainWindow::changeStatus(QString txt)  //do zmiany tekstu w belce statusu z zewnątrz
 {
     this->m_statusRight->setText(txt);
     if (txt=="Online")
