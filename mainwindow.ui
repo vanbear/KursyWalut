@@ -419,7 +419,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -527,7 +527,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -619,7 +619,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -741,45 +741,19 @@
      </size>
     </property>
    </widget>
-   <zorder>label_ShowResults</zorder>
-   <zorder>label_ShowResults_small</zorder>
+   <zorder>label_showPic1</zorder>
+   <zorder>Button_Przelicz</zorder>
+   <zorder>label_showPic2</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
+   <zorder>layoutWidget</zorder>
    <zorder>label_CurrenyName1</zorder>
    <zorder>comboBox_CurrencySelect1</zorder>
    <zorder>comboBox_CurrencySelect2</zorder>
    <zorder>label_CurrenyName2</zorder>
-   <zorder>horizontalSpacer</zorder>
-   <zorder>horizontalSpacer_2</zorder>
-   <zorder>horizontalSpacer_3</zorder>
-   <zorder>horizontalSpacer_4</zorder>
-   <zorder>horizontalSpacer_5</zorder>
-   <zorder>horizontalSpacer_6</zorder>
    <zorder>Button_switch</zorder>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>484</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuPlik">
-    <property name="title">
-     <string>Plik</string>
-    </property>
-    <addaction name="actionPrzywr_domy_lne"/>
-   </widget>
-   <widget class="QMenu" name="menuPomo">
-    <property name="title">
-     <string>Pomoc</string>
-    </property>
-    <addaction name="actionO_aplikacji"/>
-   </widget>
-   <addaction name="menuPlik"/>
-   <addaction name="menuPomo"/>
-  </widget>
   <action name="actionPrzywr_domy_lne">
    <property name="text">
     <string>Przywróć domyślne</string>
