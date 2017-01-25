@@ -29,3 +29,5 @@ DISTFILES +=
 
 RESOURCES += \
     kursywalutresources.qrc
+
+QT.testlib.CONFIG -= console

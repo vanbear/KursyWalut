@@ -12,5 +12,7 @@
         <file>img/flags/BRL.png</file>
         <file>img/flags/CAD.png</file>
         <file>img/flags/CHF.png</file>
+        <file>img/flags/THB.png</file>
+        <file>img/flags/JPY.png</file>
     </qresource>
 </RCC>
